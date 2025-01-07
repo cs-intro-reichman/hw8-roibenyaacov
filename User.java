@@ -36,6 +36,8 @@
         return follows;
     }
 
+  
+
     /** Returns the number of users that this user follows. */
     public int getfCount() {
         return fCount;
@@ -44,7 +46,9 @@
     /** If this user follows the given name, returns true; otherwise returns false. */
     public boolean follows(String name) {
         for (int i = 0; i < fCount; i++) {
-            if (follows[i] != null && follows[i].equals(name)) {
+            if (follows[i] != null){
+                break;
+            } else if (follows[i].equals(name)) {
                 return true;
             }
         }
@@ -67,7 +71,7 @@
         for (int i = 0; i < fCount; i++) {
             if (follows[i] != null && follows[i].equals(name)) {
                 for (int j = i ; j < fCount - 1; j++) {
-                follows[j] = follows[j+1];
+                    follows[j] = follows[j+1];
                 }
                 follows[fCount - 1] = null;
                 fCount--;
