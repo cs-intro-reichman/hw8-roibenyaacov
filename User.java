@@ -52,9 +52,7 @@
         newName = newName.toUpperCase();
         newName += name.substring(1);
         for (int i = 0; i < fCount; i++) {
-            if (follows[i] != null){
-                break;
-            } else if (follows[i].equals(newName)) {
+           if (follows[i].equals(newName)) {
                 return true;
             }
         }
