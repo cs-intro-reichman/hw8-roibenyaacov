@@ -1,4 +1,6 @@
 
+
+
 /** Represents a social network. The network has users, who follow other uesrs.
  *  Each user is an instance of the User class. */
 public class Network {
@@ -30,9 +32,14 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
-        
+        if (name == null) {
+            return null;
+        }
+        String newName = "" + name.charAt(0);
+        newName = newName.toUpperCase();
+        newName += name.substring(1);
         for (int i = 0; i < userCount; i++) {
-            if (name.equals(users[i].getName())){
+            if (newName.equals(users[i].getName())){
                 return users[i];
             }
         }
@@ -44,7 +51,13 @@ public class Network {
     *  If the given name is already a user in this network, does nothing and returns false;
     *  Otherwise, creates a new user with the given name, adds the user to this network, and returns true. */
     public boolean addUser(String name) {
-        if (users.length == userCount || this.getUser(name) != null){
+        if (name == null) {
+            return false;
+        }
+        String newName = "" + name.charAt(0);
+        newName = newName.toUpperCase();
+        newName += name.substring(1);
+        if (users.length == userCount || this.getUser(newName) != null){
             return false;
         }
         users[userCount] = new User(name);
@@ -56,10 +69,21 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        if (getUser(name1) == null || getUser(name2) == null) {
+        if (name1 == null || name2 == null) {
             return false;
         }
-        return getUser(name1).addFollowee(name2);
+        String newName1 = "" + name1.charAt(0);
+        newName1 = newName1.toUpperCase();
+        newName1 += name1.substring(1);
+
+        String newName2 = "" + name2.charAt(0);
+        newName2 = newName2.toUpperCase();
+        newName2 += name2.substring(1);
+
+        if (getUser(newName1) == null || getUser(newName2) == null) {
+            return false;
+        }
+        return getUser(newName1).addFollowee(newName2);
         }
        
     
@@ -67,11 +91,17 @@ public class Network {
     /** For the user with the given name, recommends another user to follow. The recommended user is
      *  the user that has the maximal mutual number of followees as the user with the given name. */
     public String recommendWhoToFollow(String name) {
+        if (name == null) {
+            return null;
+        }
+        String newName = "" + name.charAt(0);
+        newName = newName.toUpperCase();
+        newName += name.substring(1);
         User mostRecommededUserToFollow = null;
         int maxFollow = 0;
         for (int i = 0; i < userCount; i++) {
-            if (!users[i].equals(getUser(name))) {
-                int mutualFol = users[i].countMutual(getUser(name));
+            if (!users[i].equals(getUser(newName))) {
+                int mutualFol = users[i].countMutual(getUser(newName));
                 if (maxFollow < mutualFol) {
                     maxFollow = mutualFol;
                     mostRecommededUserToFollow = users [i];
@@ -99,9 +129,15 @@ public class Network {
     /** Returns the number of times that the given name appears in the follows lists of all
      *  the users in this network. Note: A name can appear 0 or 1 times in each list. */
     private int followeeCount(String name) {
+        if (name == null) {
+            return -1;
+        }
+        String newName = "" + name.charAt(0);
+        newName = newName.toUpperCase();
+        newName += name.substring(1);
         int count = 0;
         for (int i = 0; i < userCount; i++) {
-            if (users[i].follows(name)) {
+            if (users[i].follows(newName)) {
             count++;
             }
         }
